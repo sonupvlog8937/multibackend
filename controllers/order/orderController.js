@@ -17,12 +17,12 @@ class orderController {
             const order = await customerOrder.findById(id)
             if (order.payment_status === 'unpaid') {
                 await customerOrder.findByIdAndUpdate(id, {
-                    delivery_status: 'cancelled'
+                    delivery_status: 'cod'
                 })
                 await authOrderModel.updateMany({
                     orderId: id
                 }, {
-                    delivery_status: "cancelled"
+                    delivery_status: "code"
                 })
             }
             return true
@@ -123,7 +123,7 @@ class orderController {
             }).countDocuments()
             const cancelledOrder = await customerOrder.find({
                 customerId: new ObjectId(userId),
-                delivery_status: 'cancelled'
+                delivery_status: 'cod'
             }).countDocuments()
             responseReturn(res, 200, {
                 recentOrders,
